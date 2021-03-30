@@ -1,14 +1,37 @@
 import requests
-from pytube import YouTube
-from prettytable import PrettyTable
 import json
 import configparser
+import argparse
+from pytube import YouTube
+from prettytable import PrettyTable
 from bs4 import BeautifulSoup
 
 
 parser = configparser.ConfigParser()
 parser.read('config.ini')
 API_TOKEN = parser['app']['api_token']
+
+
+def cli():
+    parser = argparse.ArgumentParser(
+        description='This app downloads every single video you want on YouTube'
+    )
+    parser.add_argument(
+        '-q',
+        '--query',
+        type=str,
+        default=None,
+        help='Topic name that you want to search'
+    )
+    parser.add_argument(
+        '-u',
+        '--url',
+        type=str,
+        default=None,
+        help='url of the video you want to download'
+    )
+
+    return parser.parse_args()
 
 
 def set_connection(search_query):
@@ -46,7 +69,7 @@ def show_info_to_user(urls):
     base_url = 'https://www.youtube.com/watch?v='
     selections = []
     i = 1
-    
+
     for key, value in urls.items():
         channel = f'{i}-{value[0]}'
         title = value[1]
@@ -67,11 +90,12 @@ def download_video(url):
 
 
 def main():
-    json_response = set_connection(
-        search_query='VEGETTA777 EN 30 SEGUNDOS')
-    urls = get_videos_urls(json_response)
-    show_info_to_user(urls)
+    # json_response = set_connection(
+    #    search_query='VEGETTA777 EN 30 SEGUNDOS')
+    # urls = get_videos_urls(json_response)
+    #show_info_to_user(urls)
     # print(json.dumps(urls, indent=4, sort_keys=True))
+    args = cli()
 
 
 if __name__ == '__main__':
