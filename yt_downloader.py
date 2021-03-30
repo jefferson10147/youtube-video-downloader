@@ -1,10 +1,8 @@
 import requests
-import json
 import configparser
 import argparse
 from pytube import YouTube
 from prettytable import PrettyTable
-from bs4 import BeautifulSoup
 
 
 parser = configparser.ConfigParser()
@@ -90,12 +88,15 @@ def download_video(url):
 
 
 def main():
-    # json_response = set_connection(
-    #    search_query='VEGETTA777 EN 30 SEGUNDOS')
-    # urls = get_videos_urls(json_response)
-    #show_info_to_user(urls)
-    # print(json.dumps(urls, indent=4, sort_keys=True))
     args = cli()
+
+    if args.url:
+        download_video(args.url)
+
+    if args.query:
+        json_response = set_connection(args.query)
+        urls = get_videos_urls(json_response)
+        show_info_to_user(urls)
 
 
 if __name__ == '__main__':
