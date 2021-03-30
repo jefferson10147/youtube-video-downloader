@@ -1,4 +1,5 @@
 import requests
+import pytube
 from prettytable import PrettyTable
 import json
 import configparser
@@ -43,7 +44,9 @@ def get_videos_urls(json_response):
 
 def show_info_to_user(urls):
     base_url = 'https://www.youtube.com/watch?v='
+    selections = []
     i = 1
+    
     for key, value in urls.items():
         channel = f'{i}-{value[0]}'
         title = value[1]
@@ -51,7 +54,14 @@ def show_info_to_user(urls):
         table = PrettyTable()
         table.add_column(channel, [title, url])
         print(table, '\n')
+        selections.append(selections)
         i += 1
+
+    user_option = int(input("Which video do you like to download? (number):"))
+
+
+def download_video(url):
+    pass
 
 
 def main():
