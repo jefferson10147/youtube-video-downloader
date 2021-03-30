@@ -1,5 +1,5 @@
 import requests
-import pytube
+from pytube import YouTube
 from prettytable import PrettyTable
 import json
 import configparser
@@ -54,19 +54,21 @@ def show_info_to_user(urls):
         table = PrettyTable()
         table.add_column(channel, [title, url])
         print(table, '\n')
-        selections.append(selections)
+        selections.append(url)
         i += 1
 
-    user_option = int(input("Which video do you like to download? (number):"))
+    user_option = int(input("Which video do you like to download? (number): "))
+    download_video(selections[user_option - 1])
 
 
 def download_video(url):
-    pass
+    video = YouTube(url)
+    video.streams.first().download('./downloads/')
 
 
 def main():
     json_response = set_connection(
-        search_query='auron reacciona cine argentino')
+        search_query='VEGETTA777 EN 30 SEGUNDOS')
     urls = get_videos_urls(json_response)
     show_info_to_user(urls)
     # print(json.dumps(urls, indent=4, sort_keys=True))
