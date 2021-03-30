@@ -1,4 +1,5 @@
 import requests
+from prettytable import PrettyTable 
 import json
 import configparser
 from bs4 import BeautifulSoup
@@ -39,6 +40,10 @@ def get_videos_urls(json_response):
         urls[video_key] = f'{channel_title} --> {video_title}'
 
     return urls
+
+
+def show_info_to_user(urls):
+    pass
 
 
 def main():
