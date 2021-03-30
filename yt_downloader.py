@@ -45,15 +45,12 @@ def show_info_to_user(urls):
     base_url = 'https://www.youtube.com/watch?v='
     i = 1
     for key, value in urls.items():
-        table = PrettyTable()
         channel = f'{i}-{value[0]}'
         title = value[1]
         url = f'{base_url}{key}'
-        table.add_column(
-            channel,
-            [title, url]
-        )
-        print(table)
+        table = PrettyTable()
+        table.add_column(channel, [title, url])
+        print(table, '\n')
         i += 1
 
 
