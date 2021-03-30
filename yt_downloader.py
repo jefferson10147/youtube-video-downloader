@@ -15,12 +15,13 @@ def set_connection(search_query):
     try:
         response = requests.get(url)
     except:
+        print('Something went wrong trying to connect with YouTube API')
         exit(0)
 
     if response.status_code == 200:
         return response.json()
     else:
-        print('Can not stablish connection with YouTube')
+        print('There is not YouTube API response')
         exit(0)
 
 
