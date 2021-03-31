@@ -4,6 +4,25 @@ import argparse
 from pytube import YouTube
 from prettytable import PrettyTable
 
+logo = '''
+                    ,     ,
+                    |\---/|
+                   /  , , |
+              __.-'|  / \ /
+     __ ___.-'        ._O|
+  .-'  '        :      _/
+ / ,    .        .     |
+:  ;    :        :   _/
+|  |   .'     __:   /
+|  :   /'----'| \  |
+\  |\  |      | /| |
+ '.'| /       || \ |
+ | /|.'       '.l \\_
+ || ||             '-'
+ '-''-'
+YouTube downloader
+'''
+
 
 def cli():
     parser = argparse.ArgumentParser(
@@ -49,7 +68,7 @@ def get_api_token():
     parser = configparser.ConfigParser()
     parser.read('config.ini')
     API_TOKEN = parser['app']['api_token']
-    
+
     return API_TOKEN
 
 
@@ -87,7 +106,7 @@ def show_info_to_user(urls):
 
     if not user_option:
         exit(0)
-        
+
     download_video(selections[user_option - 1])
 
 
@@ -97,6 +116,7 @@ def download_video(url):
 
 
 def main():
+    print(logo)
     args = cli()
 
     if args.url:
