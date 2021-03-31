@@ -47,7 +47,7 @@ Now you are ready to use cli YouTube navigation just passing -q or --query flag 
 $ python3 yt_downloader.py -q 'python courses'
 ```
 
-* To see all commands you can type in your console
+3- To see all commands you can type in your console
 ```bash
 $ python3 yt_downloader.py --help
 ```
