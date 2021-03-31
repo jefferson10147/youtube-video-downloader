@@ -5,11 +5,6 @@ from pytube import YouTube
 from prettytable import PrettyTable
 
 
-parser = configparser.ConfigParser()
-parser.read('config.ini')
-API_TOKEN = parser['app']['api_token']
-
-
 def cli():
     parser = argparse.ArgumentParser(
         description='This app downloads every single video you want on YouTube'
@@ -33,6 +28,7 @@ def cli():
 
 
 def set_connection(search_query):
+    API_TOKEN = get_api_token()
     search_query = search_query.replace(' ', '%20')
     url = f'https://www.googleapis.com/youtube/v3/search?part=snippet&key={API_TOKEN}&type=video&q={search_query}'
 
@@ -47,6 +43,13 @@ def set_connection(search_query):
     else:
         print('There is not YouTube API response')
         exit(0)
+
+
+def get_api_token():
+    parser = configparser.ConfigParser()
+    parser.read('config.ini')
+    API_TOKEN = parser['app']['api_token']
+    return API_TOKEN
 
 
 def get_videos_urls(json_response):
