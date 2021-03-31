@@ -49,6 +49,7 @@ def get_api_token():
     parser = configparser.ConfigParser()
     parser.read('config.ini')
     API_TOKEN = parser['app']['api_token']
+    
     return API_TOKEN
 
 
@@ -81,7 +82,12 @@ def show_info_to_user(urls):
         selections.append(url)
         i += 1
 
+    print('Press 0 to cancel.')
     user_option = int(input("Which video do you like to download? (number): "))
+
+    if not user_option:
+        exit(0)
+        
     download_video(selections[user_option - 1])
 
 
