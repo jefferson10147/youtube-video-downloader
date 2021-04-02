@@ -120,14 +120,14 @@ def download_video(url):
         stream = video.streams.first()
         title = video.title
         video_size = int(stream.filesize)
-    except: 
+    except:
         print('We got problems getting video information from YouTube')
         exit(0)
 
     thread = threading.Thread(target=progress_bar, args=(title, video_size))
     thread.start()
     print(f'Downloading {title} video from YouTube')
-    
+
     try:
         stream.download('./downloads/')
     except:
