@@ -1,3 +1,4 @@
+import os
 import requests
 import configparser
 import argparse
@@ -112,7 +113,16 @@ def show_info_to_user(urls):
 
 def download_video(url):
     video = YouTube(url)
-    video.streams.first().download('./downloads/')
+    stream = video.streams.first()
+    title = video.title
+    video_size = video.filesize
+    # start thread
+    stream.download('./downloads/')
+
+
+def progress_bar(video_name, video_size):
+    # os.stat(f'./downloads/{video_name}.mp4')
+    pass
 
 
 def main():
