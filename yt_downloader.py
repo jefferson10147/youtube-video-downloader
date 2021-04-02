@@ -7,6 +7,7 @@ import argparse
 from pytube import YouTube
 from prettytable import PrettyTable
 
+
 logo = '''
                     ,     ,
                     |\---/|
@@ -114,13 +115,26 @@ def show_info_to_user(urls):
 
 
 def download_video(url):
-    video = YouTube(url)
-    stream = video.streams.first()
-    title = video.title
-    video_size = int(stream.filesize)
+    try:
+        video = YouTube(url)
+        stream = video.streams.first()
+        title = video.title
+        video_size = int(stream.filesize)
+    except: 
+        print('We got problems getting video information from YouTube')
+        exit(0)
+
     thread = threading.Thread(target=progress_bar, args=(title, video_size))
     thread.start()
-    stream.download('./downloads/')
+    print(f'Downloading {title} video from YouTube')
+    
+    try:
+        stream.download('./downloads/')
+    except:
+        print('We got some problems downloading video, please try again D:')
+        exit(0)
+
+    print('Your video was downloaded successfully')
 
 
 def progress_bar(video_name, video_size):
@@ -129,6 +143,7 @@ def progress_bar(video_name, video_size):
     partition_sizes = list()
     total_partitions = 10
     partitions_recovered = 1
+    print_delay = 0.5
     video_size_mb = round(video_size / 1000000, 2)
 
     for i in range(1, total_partitions):
@@ -136,7 +151,7 @@ def progress_bar(video_name, video_size):
         percentage = round(percentage + 0.1, 1)
 
     while True:
-        time.sleep(0.1)
+        time.sleep(print_delay)
         try:
             current_size = os.stat(route).st_size
         except FileNotFoundError:
@@ -150,7 +165,7 @@ def progress_bar(video_name, video_size):
                 partition_sizes.pop(0)
                 partitions_left = total_partitions - partitions_recovered
                 current_size_mb = round(current_size / 1000000, 2)
-                download_left = f'{current_size_mb} / {video_size_mb} mb'
+                download_left = f'{current_size_mb} / {video_size_mb}'
                 print('[', '##'*partitions_recovered, '**' *
                       partitions_left, ']', download_left, end='\r')
                 partitions_recovered += 1
